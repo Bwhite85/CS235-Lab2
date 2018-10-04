@@ -58,6 +58,7 @@ string ExpressionManager::postfixEvaluate(string postfixExpression){
     string numOne = "";
     string numTwo = "";
     string finalNum = "";
+    string answer = "";
     int numCalcOne = 0;
     int numCalcTwo = 0;
     int numCalcAnswer = 0;
@@ -89,19 +90,37 @@ string ExpressionManager::postfixEvaluate(string postfixExpression){
                     numTwo = sStack.top();
                     sStack.pop();
 
+                    sStreamCalc << numTwo << numOne;
+
                     cout << numOne << " numOne" << endl;
                     cout << numTwo << " numTwo" << endl;
                     cout << input << " input" << endl;
 
-                    sStreamCalc << numTwo << numOne;
-
                     sStreamCalc >> numCalcOne;
                     sStreamCalc >> numCalcTwo;
+                    sStreamCalc.clear();
 
-                    numCalcAnswer = numCalcTwo + input + numCalcOne;
+                    if(input == "+"){
+                        numCalcAnswer = numCalcTwo + numCalcOne;
+                    }
+                    else if(input == "-"){
+                        numCalcAnswer = numCalcTwo - numCalcOne;
+                    }
+                    else if(input == "*"){
+                        numCalcAnswer = numCalcTwo * numCalcOne;
+                    }
+                    else if(input == "/"){
+                        numCalcAnswer = numCalcTwo / numCalcOne;
+                    }
+                    else if(input == "%"){
+                        numCalcAnswer = numCalcTwo % numCalcOne;
+                    }
 
+                    sStreamCalc << numCalcAnswer;
+                    sStreamCalc >> answer;
                     //need to convert answer back into string to put it on the stack. Stack is for strings only.
-                    sStack.push(numCalcAnswer);
+                    sStack.push(answer);
+                    cout << "placed " << numCalcAnswer << " on stack" << endl;
 
                 }
                 else{
